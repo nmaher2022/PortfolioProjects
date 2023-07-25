@@ -7,4 +7,4 @@ There are currently two projects in this portfolio.
 In the future, there will be more projects to be added namely:<br>
 i) a simple game in python involving classes,<br>
 ii) a python machine learning project with sklearn, keras <br>
-iii)a project connecting SQL to Tableau visualisations.
+iii) a project connecting SQL to Tableau visualisations.
