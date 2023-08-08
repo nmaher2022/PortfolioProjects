@@ -34,7 +34,7 @@ GO
 EXEC sp_MSset_oledb_prop N'Microsoft.ACE.OLEDB.12.0', N'DynamicParameters', 1;
 GO
 
-The Excel worksheets are imported into SQL, while running SSMS as administrator*/
+/*The Excel worksheets are imported into SQL, while running SSMS as administrator*/
 USE project_test;
 SELECT * INTO CovidVaccinations
 FROM OPENROWSET('Microsoft.ACE.OLEDB.12.0','Excel 12.0;Database=C:\Users\User\Documents\Covid_Vaccinations4.xlsx', [Sheet1$]);
