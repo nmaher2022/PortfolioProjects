@@ -9,6 +9,8 @@ from random import randint
 # Function for printing the game instructions 
 def print_instructions(instruction):
     print(instruction)
+def input_prompt(var_prompt):
+    return input(var_prompt)
 
 #  Function for getting the user's score given a user name.
 #  The try statement is for the case where the user_score file does not exist yet.
@@ -92,24 +94,23 @@ class BinaryGame(Game):
         score = 0
         for i in range(self.no_of_questions):
             base10 = randint(1,100)
-            user_result = input("Convert the number %d to binary "%base10) # gives user input as a string
+            user_result = input('Convert the number %d to binary '%base10) # gives user input as a string
             
             while True:
                 try:
                     # Tells Python that the number is base 2, then int converts it to base 10
                     answer = int(user_result,base=2) 
                     if answer == base10:
-                        print("The answer is correct.")
+                        print('The answer is correct.')
                         score += 1
                         break
                     else:
-                        print("That was an incorrect answer. The correct answer is {0:b}.".format(base10))
+                        print('That was an incorrect answer. The correct answer is {0:b}.'.format(base10))
                         break          
                         
                 except Exception as e:
                     print('The error message is ',e)
-                    prompt = ('This is not a binary number. Please enter a new number')
-                    user_result = input(prompt) 
+                    user_result = input_prompt('This is not a binary number. Please enter a new number')
                    
         return score
         
@@ -124,7 +125,7 @@ class MathGame(Game):
         score = 0
         number_list = [0]*5
         symbol_list = ['']*4
-        operator_dict = {1:"+",2:"-",3:"*",4:"**"}
+        operator_dict = {1:'+',2:'-',3:'*',4:'**'}
 
         for i in range(self._no_of_questions):
             for i,j in enumerate(number_list):
@@ -139,27 +140,27 @@ class MathGame(Game):
                 question_string = question_string + symbol_list[i] + str(number_list[i+1])
             
             result = eval(question_string)
-            question_string = question_string.replace("**","^")
-            prompt = ('Evaluate the expression: %s '%question_string)
-            user_result = input(prompt) # gives user input as a string
+            question_string = question_string.replace('**','^')
+            user_result = input_prompt('Evaluate the expression: %s '%question_string) # gives user input as a string
 
             while True:
                 try:
                     answer = int(user_result)
                     if result == answer:
-                        print("The answer is correct.")
+                        print('The answer is correct.')
                         score += 1
                         break
                     else:
-                        print("That was an incorrect answer. The correct answer is %d"%result)
+                        print('That was an incorrect answer. The correct answer is %d'%result)
                         break           
                         
                 except Exception as e:
                     print('The error message is ',e)
-                    prompt = ('This is an invalid input. It should be a number. Please enter a new number')
-                    user_result = input(prompt) 
+                    user_result = input_prompt('This is an invalid input. It should be a number. Please enter a new number')
                    
         return score
+    
+
 
 #  This try statement combines all the previous classes and functions to interact with the user
 try:
@@ -174,8 +175,9 @@ try:
     bg = BinaryGame()
     mg = MathGame()
 
-    prompt = "What is your username?"
-    user_name = input(prompt)
+   # prompt = 'What is your username?'
+   # user_name = input(prompt)
+    user_name = input_prompt('What is your username?')
     score = int(get_user_score(user_name))
     if score == -1:
         new_user = True
@@ -186,15 +188,12 @@ try:
     user_choice = 0
     num_games = 0
 
-    while user_choice != "-1":
-        prompt = 'What game would you like to play: Binary (press b) or Math(press m)?'
-        gamechoice = input(prompt)
+    while user_choice != '-1':
+        gamechoice = input_prompt('What game would you like to play: Binary (press b) or Math(press m)?')
         while gamechoice != 'b' and gamechoice != 'm':
-            prompt = 'That is an invalid choice. The game options are Binary (press b) or Math (press m)?'
-            gamechoice = input(prompt)
-        user_choice = "-1"
-        prompt = "How many questions do you want per game (1 to 10)"
-        numprompt = input(prompt)
+            gamechoice = input_prompt('That is an invalid choice. The game options are Binary (press b) or Math (press m)?')
+        user_choice = '-1'
+        numprompt = input_prompt('How many questions do you want per game (1 to 10)')
 
         while True:
             try:
@@ -202,14 +201,13 @@ try:
                 break
             except Exception as e:
                 print('The error message is ',e)
-                prompt = ('This is an invalid input. It should be a number. Please enter a new number')
-                user_result = input(prompt) #gives user input as a string
+                user_result = input_prompt('This is an invalid input. It should be a number. Please enter a new number')#gives user input as a string
                 break 
 
         if gamechoice == 'm':
             mg.no_of_questions = num 
-            message = mg.some_method(...)
-            print(message)
+           # message = mg.some_method(...)
+            #print(message)
             print_instructions(mathInstructions)
             score = score + mg.generate_questions()
         elif gamechoice == 'b':
@@ -217,13 +215,13 @@ try:
             print_instructions(binaryInstructions)
             score = score + bg.generate_questions()
 
-        print("\n Your current score is %d"%(score))
+        print('\n Your current score is %d'%(score))
         num_games +=1
-        user_choice = input("\nPress Enter to continue or -1 to end :")
+        user_choice = input('\nPress Enter to continue or -1 to end :')
         if num_games > 1:
             new_user = False
         update_user_score(new_user, user_name, str(score))
        
 except Exception as e:
     print('An error has occurred. The program will stop.')
-    print("Error: ", e)
+    print('Error: ', e)
