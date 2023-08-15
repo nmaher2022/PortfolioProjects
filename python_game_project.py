@@ -9,8 +9,22 @@ from random import randint
 # Function for printing the game instructions 
 def print_instructions(instruction):
     print(instruction)
+
+#  Function for printing a prompt and taking the input
 def input_prompt(var_prompt):
     return input(var_prompt)
+
+#  Function for printing strings explaining what the number of questions are set to
+#  when the user gives a number outside of the given range.
+def explain_num_of_questions(val):
+    if val < 1:
+        print('Minimum Number of Questions=1')
+        print('Hence, number of questions will be set to 1.')
+    elif val > 10:
+        print('Maximum Number of Questions=10')
+        print('Hence, number of questions will be set to 10.')
+    
+
 
 #  Function for getting the user's score given a user name.
 #  The try statement is for the case where the user_score file does not exist yet.
@@ -75,12 +89,8 @@ class Game:
     def no_of_questions(self, value):
         if value < 1:
             self._no_of_questions = 1
-            print('Minimum Number of Questions=1')
-            print('Hence, number of questions will be set to 1.')
         elif value > 10:
             self._no_of_questions = 10
-            print('Maximum Number of Questions=10')
-            print('Hence, number of questions will be set to 10.')
         else: 
             self._no_of_questions = value
             
