@@ -130,14 +130,14 @@ class BinaryGame(Game):
 #  If they give a correct answer their score increases by one, otherwise their score remains the same
 #  and the correct answer is provided.
 class MathGame(Game):
-    
-    def generate_questions(self):
-        score = 0
+    def generate_questions(self):       
         number_list = [0]*5
         symbol_list = ['']*4
         operator_dict = {1:'+',2:'-',3:'*',4:'**'}
-
+        self.question_list = []
+        
         for i in range(self._no_of_questions):
+            print(i)
             for i,j in enumerate(number_list):
                 number_list[i] = randint(1,9)
             for i,j in enumerate(symbol_list):
@@ -149,10 +149,17 @@ class MathGame(Game):
             for i,j in enumerate(symbol_list):
                 question_string = question_string + symbol_list[i] + str(number_list[i+1])
             
-            result = eval(question_string)
-            question_string = question_string.replace('**','^')
-            user_result = input_prompt('Evaluate the expression: %s '%question_string) # gives user input as a string
+            self.question_list.append(question_string)
+        return self.question_list
 
+    def present_questions(self,list_of_questions):
+        score = 0
+        for i in range(self._no_of_questions):
+            result = eval(list_of_questions[i])
+            question_string_out = str(list_of_questions[i]).replace('**','^')
+            user_result = input_prompt('Evaluate the expression: %s '%question_string_out) # gives user input as a string
+        
+        
             while True:
                 try:
                     answer = int(user_result)
@@ -216,16 +223,19 @@ try:
 
         if gamechoice == 'm':
             mg.no_of_questions = num 
+            explain_num_of_questions(num)
            # message = mg.some_method(...)
             #print(message)
             print_instructions(mathInstructions)
-            score = score + mg.generate_questions()
+            qlist = mg.generate_questions()
+            print(qlist)
+            score = score + mg.present_questions(qlist)
         elif gamechoice == 'b':
             bg.no_of_questions = num 
             print_instructions(binaryInstructions)
             score = score + bg.generate_questions()
 
-        print('\n Your current score is %d'%(score))
+        print('\n %s, your current score is %d'%(user_name,score))
         num_games +=1
         user_choice = input('\nPress Enter to continue or -1 to end :')
         if num_games > 1:
