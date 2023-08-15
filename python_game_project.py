@@ -208,6 +208,8 @@ try:
 
         if gamechoice == 'm':
             mg.no_of_questions = num 
+            message = mg.some_method(...)
+            print(message)
             print_instructions(mathInstructions)
             score = score + mg.generate_questions()
         elif gamechoice == 'b':
