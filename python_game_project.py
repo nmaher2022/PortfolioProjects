@@ -101,21 +101,27 @@ class Game:
 #  and the correct answer is provided.
 class BinaryGame(Game):
     def generate_questions(self):
-        score = 0
+        base10 = [0]*self.no_of_questions
         for i in range(self.no_of_questions):
-            base10 = randint(1,100)
-            user_result = input('Convert the number %d to binary '%base10) # gives user input as a string
+            base10[i] = randint(1,100)
+        return base10
+    
+    def present_questions(self, base10list):
+        score = 0
+            
+        for i in range(self.no_of_questions):
+            user_result = input('Convert the number %d to binary '%base10list[i]) # gives user input as a string
             
             while True:
                 try:
                     # Tells Python that the number is base 2, then int converts it to base 10
                     answer = int(user_result,base=2) 
-                    if answer == base10:
+                    if answer == base10list[i]:
                         print('The answer is correct.')
                         score += 1
                         break
                     else:
-                        print('That was an incorrect answer. The correct answer is {0:b}.'.format(base10))
+                        print('That was an incorrect answer. The correct answer is {0:b}.'.format(base10list[i]))
                         break          
                         
                 except Exception as e:
@@ -137,7 +143,6 @@ class MathGame(Game):
         self.question_list = []
         
         for i in range(self._no_of_questions):
-            print(i)
             for i,j in enumerate(number_list):
                 number_list[i] = randint(1,9)
             for i,j in enumerate(symbol_list):
@@ -228,12 +233,13 @@ try:
             #print(message)
             print_instructions(mathInstructions)
             qlist = mg.generate_questions()
-            print(qlist)
             score = score + mg.present_questions(qlist)
         elif gamechoice == 'b':
             bg.no_of_questions = num 
+            explain_num_of_questions(num)
             print_instructions(binaryInstructions)
-            score = score + bg.generate_questions()
+            qlist = bg.generate_questions()
+            score = score + bg.present_questions(qlist)
 
         print('\n %s, your current score is %d'%(user_name,score))
         num_games +=1
